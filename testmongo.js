@@ -16,7 +16,7 @@ const uri = "mongodb+srv://<user>:<password>@ckmdb.5oxvqja.mongodb.net/?retryWri
 // so in this case, do these =>
 // const user = process.env.user;
 // const paswd = process.env.paswd;
-// uri = "mongodb+srv://" + user +":"+ password +"@ckmdb.5oxvqja.mongodb.net/?retryWrites=true&w=majority";
+// uri = "mongodb+srv://" + user +":"+ paswd +"@ckmdb.5oxvqja.mongodb.net/?retryWrites=true&w=majority";
 
 
 
