@@ -52,7 +52,7 @@ async function run() {
 
     // Here we make a search query where the key is hardwired to 'partID' 
     // and the value is picked from the input parameter that comes in the route
-     const query = { partID: req.params.item };
+     const query = { part: req.params.item };
      console.log("Looking for: " + query);
 
     const part = await parts.findOne(query);
@@ -88,7 +88,7 @@ async function run() {
 
     console.log("Looking for: " + JSON.stringify(query));
 
-    const part = await where2look.findOne(query);
+    const part = await parts.findOne(query);
     console.log('Found this entry: ', part);
     res.send('Found this: ' + JSON.stringify(part));  //Use stringify to print a json
 
@@ -127,7 +127,7 @@ async function run() {
     const database = client.db('MyDBexample');
     const parts = database.collection('MyStuff');
 
-    const doit = await where2put.insertOne(doc2insert);
+    const doit = await parts.insertOne(doc2insert);
     console.log(doit);
     res.send('Got this: ' + JSON.stringify(doit));  //Use stringify to print a json
 
