@@ -52,8 +52,8 @@ app.get('/api/mongo/:item', async function(req, res) {
   console.log("Looking for: " + searchKey);
 
   try {
-    const database = client.db('ckmdb');
-    const parts = database.collection('cmps415');
+    const database = client.db('Cluster0');
+    const parts = database.collection('MyDBexample');
 
     // Hardwired Query for a part that has partID '12345'
     // const query = { partID: '12345' };
