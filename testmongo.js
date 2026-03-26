@@ -45,21 +45,21 @@ app.get('/say/:name', function(req, res) {
 
 
 // Route to access database:
-// Example: URL/api/mongo/12345
+// Example: URL/api/mongo/Drill
 app.get('/api/mongo/:item', async function(req, res) {
   const client = new MongoClient(uri);
-  const searchKey = "{ partID: '" + req.params.item + "' }";
+  const searchKey = "{ part: '" + req.params.item + "' }";
   console.log("Looking for: " + searchKey);
 
   try {
-    const database = client.db('Cluster0');
+    const database = client.db('MyDBexample');
     const parts = database.collection('MyStuff');
 
-    // Hardwired Query for a part that has partID '12345'
-    // const query = { partID: '12345' };
-    // But we will use the parameter provided with the route: URL/api/mongo/12345
+    // Hardwired Query for a part that has field 'part' matching the URL param
+    // const query = { part: 'Drill' };
+    // But we will use the parameter provided with the route: URL/api/mongo/Drill
     
-    const query = { partID: req.params.item };
+    const query = { part: req.params.item };
 
     const part = await parts.findOne(query);
     console.log(part);
@@ -70,5 +70,3 @@ app.get('/api/mongo/:item', async function(req, res) {
     await client.close();
   }
 });
-
-
