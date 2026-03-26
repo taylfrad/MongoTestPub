@@ -53,7 +53,7 @@ app.get('/api/mongo/:item', async function(req, res) {
 
   try {
     const database = client.db('Cluster0');
-    const parts = database.collection('MyDBexample');
+    const parts = database.collection('MyStuff');
 
     // Hardwired Query for a part that has partID '12345'
     // const query = { partID: '12345' };
