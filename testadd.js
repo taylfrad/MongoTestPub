@@ -47,8 +47,8 @@ const client = new MongoClient(uri);
 
 async function run() {
   try {
-    const database = client.db('ckmdb');
-    const parts = database.collection('cmps415');
+    const database = client.db('MyDBexample');
+    const parts = database.collection('MyStuff');
 
     // Here we make a search query where the key is hardwired to 'partID' 
     // and the value is picked from the input parameter that comes in the route
@@ -78,8 +78,8 @@ const client = new MongoClient(uri);
 
 async function run() {
   try {
-    const database = client.db('ckmdb');
-    const where2look = database.collection('cmps415');
+    const database = client.db('MyDBexample');
+    const parts = database.collection('MyStuff');
 
     // Here we will make a query object using the parameters provided with the route
     // as they key:value pairs
@@ -124,8 +124,8 @@ console.log("Adding: " + doc2insert);
 
 async function run() {
   try {
-    const database = client.db('ckmdb');
-    const where2put = database.collection('cmps415');
+    const database = client.db('MyDBexample');
+    const parts = database.collection('MyStuff');
 
     const doit = await where2put.insertOne(doc2insert);
     console.log(doit);
