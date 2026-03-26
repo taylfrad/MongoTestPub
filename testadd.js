@@ -1,14 +1,14 @@
 const { MongoClient } = require("mongodb");
 
 // The uri string must be the connection string for the database (obtained on Atlas).
-const uri = "mongodb+srv://<user>:<password>@ckmdb.5oxvqja.mongodb.net/?retryWrites=true&w=majority";
+require('dotenv').config();
+const uri = process.env.mongo_uri;
 
 // --- This is the standard stuff to get it to work on the browser
 const express = require('express');
 const app = express();
-const port = 3000;
-app.listen(port);
-console.log('Server started at http://localhost:' + port);
+const port = process.env.PORT || 3000;
+app.listen(port, () => console.log('Server started at http://localhost:' + port));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

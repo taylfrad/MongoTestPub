@@ -1,7 +1,8 @@
 const { MongoClient } = require("mongodb");
 
 // The uri string must be the connection string for the database (obtained on Atlas).
-const uri = "mongodb+srv://<user>:<password>@ckmdb.5oxvqja.mongodb.net/?retryWrites=true&w=majority";
+require('dotenv').config();
+const uri = process.env.mongo_uri;
 // Make sure the package.json contains:
 //   "dependencies": {
 //    "express": "^4.18.2",
@@ -23,9 +24,8 @@ const uri = "mongodb+srv://<user>:<password>@ckmdb.5oxvqja.mongodb.net/?retryWri
 // --- This is the standard stuff to get it to work on the browser
 const express = require('express');
 const app = express();
-const port = 3000;
-app.listen(port);
-console.log('Server started at http://localhost:' + port);
+const port = process.env.PORT || 3000;
+app.listen(port, () => console.log('Server started at http://localhost:' + port));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -46,12 +46,11 @@ app.get('/say/:name', function(req, res) {
 
 // Route to access database:
 // Example: URL/api/mongo/12345
-app.get('/api/mongo/:item', function(req, res) {
-const client = new MongoClient(uri);
-const searchKey = "{ partID: '" + req.params.item + "' }";
-console.log("Looking for: " + searchKey);
+app.get('/api/mongo/:item', async function(req, res) {
+  const client = new MongoClient(uri);
+  const searchKey = "{ partID: '" + req.params.item + "' }";
+  console.log("Looking for: " + searchKey);
 
-async function run() {
   try {
     const database = client.db('ckmdb');
     const parts = database.collection('cmps415');
@@ -70,8 +69,6 @@ async function run() {
     // Ensures that the client will close when you finish/error
     await client.close();
   }
-}
-run().catch(console.dir);
 });
 
 
