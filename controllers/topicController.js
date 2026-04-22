@@ -109,12 +109,28 @@ exports.postMessage = async (req, res) => {
   res.redirect(`/topics/${topic._id}`);
 };
 
+// Returns the referring URL when it's same-origin, otherwise the fallback.
+// Lets subscribe/unsubscribe send the user back where they came from without
+// enabling open-redirect attacks.
+function safeBack(req, fallback) {
+  const ref = req.get('Referrer') || req.get('Referer') || '';
+  try {
+    const url = new URL(ref);
+    if (url.host === req.get('host')) {
+      return url.pathname + url.search;
+    }
+  } catch (e) {
+    // not a valid URL — fall through
+  }
+  return fallback;
+}
+
 exports.subscribe = async (req, res) => {
   await Topic.updateOne(
     { _id: req.params.id },
     { $addToSet: { subscribers: req.session.userId } }
   );
-  res.redirect(`/topics/${req.params.id}`);
+  res.redirect(safeBack(req, `/topics/${req.params.id}`));
 };
 
 exports.unsubscribe = async (req, res) => {
@@ -122,5 +138,5 @@ exports.unsubscribe = async (req, res) => {
     { _id: req.params.id },
     { $pull: { subscribers: req.session.userId } }
   );
-  res.redirect(`/topics/${req.params.id}`);
+  res.redirect(safeBack(req, `/topics/${req.params.id}`));
 };
