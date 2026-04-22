@@ -405,6 +405,25 @@ a.card:hover, button.card:hover {
 }
 .theme-picker svg { width: 12px; height: 12px; }
 
+/* Preview: in light mode the Dark option is rendered black so you can see at
+   a glance which pill means dark mode. Does nothing in dark mode (the button
+   falls back to the neutral style above). */
+html:not([data-theme='dark']) .theme-picker button[data-theme='dark'] {
+  background: #1C1C1E;
+  color: #F5F5F7;
+}
+html:not([data-theme='dark']) .theme-picker button[data-theme='dark']:hover {
+  background: #2C2C2E;
+  color: #FFFFFF;
+}
+html:not([data-theme='dark']) .theme-picker button[data-theme='dark'][aria-pressed='true'] {
+  background: #000000;
+  color: #FFFFFF;
+  box-shadow:
+    0 0 0 0.5px rgba(255, 255, 255, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
 /* ─── Hero glow ─── */
 .hero-glow { position: relative; isolation: isolate; }
 .hero-glow::before {
