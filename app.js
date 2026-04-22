@@ -1,10 +1,15 @@
 const path = require('path');
 const express = require('express');
+const compression = require('compression');
 const session = require('express-session');
 const { MongoStore } = require('connect-mongo');
 const expressLayouts = require('express-ejs-layouts');
 
 const Notification = require('./models/Notification');
+
+// Bumped on every process boot — appended to /css/app.css URL so clients
+// pick up fresh styles after a redeploy without serving stale cache.
+const ASSET_VERSION = Date.now().toString(36);
 
 const authRoutes = require('./routes/auth');
 const topicRoutes = require('./routes/topics');
@@ -13,6 +18,8 @@ const statsRoutes = require('./routes/stats');
 const homeController = require('./controllers/homeController');
 
 const app = express();
+
+app.use(compression());
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -25,7 +32,16 @@ app.use((req, res, next) => {
   if (req.body === undefined) req.body = {};
   next();
 });
-app.use(express.static(path.join(__dirname, 'public')));
+
+// Long-cache static files (the ?v=<ASSET_VERSION> query busts the cache
+// when the server restarts, e.g. on redeploy).
+app.use(
+  express.static(path.join(__dirname, 'public'), {
+    maxAge: '30d',
+    etag: true,
+    immutable: true,
+  })
+);
 
 app.use(
   session({
@@ -42,6 +58,11 @@ app.use(
     },
   })
 );
+
+app.use((req, res, next) => {
+  res.locals.assetVersion = ASSET_VERSION;
+  next();
+});
 
 app.use(async (req, res, next) => {
   if (req.session.userId) {
