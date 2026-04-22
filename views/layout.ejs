@@ -292,6 +292,9 @@
       .btn-ghost { background: transparent; color: var(--label-2); }
       .btn-ghost:hover { color: var(--label-1); background: var(--fill-4); }
 
+      .btn-danger-ghost { background: transparent; color: var(--danger); }
+      .btn-danger-ghost:hover { background: var(--danger-soft); color: var(--danger); }
+
       .btn-destructive {
         background: var(--danger);
         color: #fff;
@@ -400,10 +403,13 @@
       /* ─── Theme picker ─── */
       .theme-picker {
         display: inline-flex;
-        background: var(--fill-3);
+        background: rgba(0, 0, 0, 0.08);
         border-radius: 980px;
         padding: 2px;
         gap: 0;
+      }
+      [data-theme='dark'] .theme-picker {
+        background: rgba(120, 120, 128, 0.32);
       }
       .theme-picker button {
         background: transparent;

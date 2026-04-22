@@ -46,8 +46,9 @@
         <form method="POST" action="/logout" class="inline"
               data-confirm="You'll be signed out of MessageBoard."
               data-confirm-title="Sign out?"
-              data-confirm-label="Sign out">
-          <button type="submit" class="btn btn-ghost btn-sm">Sign out</button>
+              data-confirm-label="Sign out"
+              data-confirm-destructive="true">
+          <button type="submit" class="btn btn-danger-ghost btn-sm">Sign out</button>
         </form>
       <% } else { %>
         <a href="/login" class="btn btn-ghost btn-sm">Sign in</a>
