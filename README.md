@@ -34,7 +34,7 @@ two most recent messages per subscribed topic on their dashboard.
 
 ## Design patterns
 
-![Architecture — request flow with Singleton DB and Observer fan-out](docs/images/architecture.png)
+![Message Board — architecture: request flow with Singleton DB and Observer fan-out](docs/images/architecture.png)
 
 **MVC (T5)** — Mongoose schemas in `/models`, EJS templates in `/views`, request handlers in
 `/controllers`, URL wiring only in `/routes`.
@@ -93,7 +93,7 @@ Required environment variables:
 
 ## Data model
 
-![Database schema — collections, fields, indexes, and relationships](docs/images/database_schema.png)
+![Message Board — data model: collections, fields, indexes, and relationships](docs/images/database_schema.png)
 
 - **User** — `username` (unique), `email` (unique, lowercased), `passwordHash` (bcrypt, 10 rounds).
   Virtual `password` setter validates length on save.

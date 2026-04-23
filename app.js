@@ -19,6 +19,10 @@ const homeController = require('./controllers/homeController');
 
 const app = express();
 
+// Render sits behind a reverse proxy — required for secure cookies and
+// accurate req.ip. Trust only the first proxy hop, not the whole chain.
+app.set('trust proxy', 1);
+
 app.use(compression());
 
 app.set('view engine', 'ejs');
@@ -45,7 +49,7 @@ app.use(
 
 app.use(
   session({
-    secret: process.env.SESSION_SECRET || 'dev-only-change-me',
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({
@@ -54,6 +58,8 @@ app.use(
     }),
     cookie: {
       httpOnly: true,
+      sameSite: 'lax',
+      secure: process.env.NODE_ENV === 'production',
       maxAge: 1000 * 60 * 60 * 24 * 7,
     },
   })
