@@ -327,6 +327,17 @@ h1, h2, h3, h4, .display {
 }
 .card-body { padding: 1.35rem 1.45rem; }
 .card-body-tight { padding: 1rem 1.15rem; }
+
+/* Opt-out for cards that contain their own row grids (e.g. the stats
+   table). content-visibility + intrinsic-size collapses the card to
+   140px before paint, which makes the inner grid's columns settle at
+   the wrong width, so the edges of each row can end up off by a pixel.
+   Give those cards normal rendering. */
+.card-flat {
+  content-visibility: visible;
+  contain: none;
+  contain-intrinsic-size: auto;
+}
 a.card, button.card { cursor: pointer; }
 a.card:hover, button.card:hover {
   box-shadow: var(--shadow-md);

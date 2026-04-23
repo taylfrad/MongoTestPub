@@ -12,15 +12,15 @@
 <% if (topics.length === 0) { %>
   <div class="card card-body text-center text-tertiary">No topics yet.</div>
 <% } else { %>
-  <div class="card overflow-hidden">
-    <div class="grid grid-cols-[24px_1fr_44px_56px] sm:grid-cols-[32px_1fr_72px_84px] gap-3 sm:gap-4 px-3 sm:px-5 py-3 text-xs uppercase tracking-[0.1em] text-tertiary font-medium border-b border-hair">
+  <div class="card card-flat overflow-hidden">
+    <div class="grid grid-cols-[28px_1fr_56px_72px] sm:grid-cols-[32px_1fr_72px_84px] gap-4 px-5 py-3 text-xs uppercase tracking-[0.1em] text-tertiary font-medium border-b border-hair">
       <span>#</span>
       <span>Topic</span>
       <span class="text-right">Subs</span>
       <span class="text-right">Views</span>
     </div>
     <% topics.forEach(function (t, i) { %>
-      <div class="grid grid-cols-[24px_1fr_44px_56px] sm:grid-cols-[32px_1fr_72px_84px] gap-3 sm:gap-4 px-3 sm:px-5 py-3.5 items-baseline reveal <%= i === topics.length - 1 ? '' : 'border-b border-hair' %>">
+      <div class="grid grid-cols-[28px_1fr_56px_72px] sm:grid-cols-[32px_1fr_72px_84px] gap-4 px-5 py-3.5 items-baseline reveal <%= i === topics.length - 1 ? '' : 'border-b border-hair' %>">
         <span class="text-quaternary mono text-sm"><%= i + 1 %></span>
         <div class="min-w-0">
           <a href="/topics/<%= t._id %>" class="font-semibold hover:opacity-70 transition-opacity"><%= t.title %></a>
