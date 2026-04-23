@@ -1,10 +1,10 @@
 # Message-Board
 
-A Twitter-style message board built for **CMPS 4150 — Enterprise Systems (Spring 2026), Project P1**.
+A Twitter-style message board built for **CMPS 4150 — Enterprise Systems (Spring 2026)**.
 Users register, subscribe to topics (message threads), post messages in subscribed topics, and see the
 two most recent messages per subscribed topic on their dashboard.
 
-- **Live app:** https://mongotestpub-r41n.onrender.com/
+- **Live app:** https://message-board-wcu5.onrender.com/
 - **Repo:** https://github.com/taylfrad/Message-Board
 - **Team:** Christopher Ford, Taylor Fradella
 
@@ -36,16 +36,16 @@ two most recent messages per subscribed topic on their dashboard.
 
 ![Message Board — architecture: request flow with Singleton DB and Observer fan-out](docs/images/architecture.png)
 
-**MVC (T5)** — Mongoose schemas in `/models`, EJS templates in `/views`, request handlers in
+**MVC** — Mongoose schemas in `/models`, EJS templates in `/views`, request handlers in
 `/controllers`, URL wiring only in `/routes`.
 
-**Observer (T6)** — Abstract `Subject` and `Observer` in `/patterns`, plus concrete `TopicSubject`
+**Observer** — Abstract `Subject` and `Observer` in `/patterns`, plus concrete `TopicSubject`
 and `SubscriberObserver`. When a message is posted, [services/notificationHub.js](services/notificationHub.js)
 loads the topic's current subscribers, attaches one observer per subscriber to a fresh
 `TopicSubject`, and fires a `NEW_MESSAGE` event. Each observer's `update()` writes a `Notification`
 document (the message author is skipped).
 
-**Singleton (T7)** — [config/db.js](config/db.js) exposes a `DatabaseConnection` class with a
+**Singleton** — [config/db.js](config/db.js) exposes a `DatabaseConnection` class with a
 private static `#instance` field. The constructor throws if called directly; callers must use
 `DatabaseConnection.getInstance()`. Server bootstrap ([server.js](server.js)) is the only caller of
 `.connect()`; no module anywhere else calls `mongoose.connect()` directly.
